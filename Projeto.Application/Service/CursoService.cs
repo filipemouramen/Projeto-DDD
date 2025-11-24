@@ -46,6 +46,7 @@ namespace Projeto.Application.Service
         public void Deletar(int IDcurso)
         {
             Curso buscaCurso = _cursoRepository.ObterPorId(IDcurso);
+
             if (buscaCurso == null)
                 throw new Exception("Curso não encontrado ou não existente.");
 

@@ -50,8 +50,48 @@ namespace Projeto.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
 
+        [HttpDelete]
+        public IActionResult Deletar(int IDcurso)
+        {
+            try
+            {
+                _cursoService.Deletar(IDcurso);
+                return Ok("Curso deletado com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        [HttpGet]
+        public IActionResult VericarSeAtivo(int idcurso)
+        {
+            try
+            {
+                bool ativo = _cursoService.VerificarSeAtivo(idcurso);
+                return Ok(ativo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ObterTodos()
+        {
+            try
+            {
+                var cursosobtidos = _cursoService.ObterTodos();
+                return Ok(cursosobtidos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
