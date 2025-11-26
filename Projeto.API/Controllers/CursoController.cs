@@ -93,5 +93,23 @@ namespace Projeto.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult ObterPorId(int IDCurso)
+        {
+            try
+            {
+                var curso = _cursoService.ObterPorId(IDCurso);
+                if (curso == null)
+                {
+                    return NotFound("Curso não encontrado.");
+                }
+                return Ok(curso);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

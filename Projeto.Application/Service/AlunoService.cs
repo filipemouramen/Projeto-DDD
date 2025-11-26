@@ -88,6 +88,11 @@ namespace Projeto.Application.Services
 
         public List<Aluno> ObterTodos()
         {
+            var listaAlunos = _alunoRepository.ObterTodos();
+
+            if (listaAlunos.Count == 0)
+            throw new Exception("Nenhum aluno encontrado.");
+
             return _alunoRepository.ObterTodos();
         }
     }

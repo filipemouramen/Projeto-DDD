@@ -62,6 +62,11 @@ namespace Projeto.Application.Service
 
         public List<Curso> ObterTodos()
         {
+            var cursos = _cursoRepository.ObterTodos();
+
+            if (cursos.Count == 0)
+                throw new Exception("Nenhum curso cadastrado.");
+
             return _cursoRepository.ObterTodos();
         }
 

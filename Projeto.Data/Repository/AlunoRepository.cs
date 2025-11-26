@@ -57,7 +57,23 @@ namespace Projeto.Data.Repository
 
         public Aluno ObterPorCpf(string cpf)
         {
-            throw new NotImplementedException();
+          var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno WHERE cpf = @cpf"; 
+            using var conn = new SqlConnection(_connectionString); 
+            using var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@cpf", cpf);
+            conn.Open();
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return new Aluno(
+                    reader.GetInt32(0),
+                    reader.GetString(1), 
+                    reader.GetString(2), 
+                    reader.GetString(3),
+                    reader.GetString(4)   
+                );
+            }
+            throw new InvalidOperationException("Aluno não encontrado.");
         }
 
         public Aluno ObterPorId(int idAluno) 

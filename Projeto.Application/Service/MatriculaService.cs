@@ -45,50 +45,14 @@ namespace Projeto.Application.Service
             _matriculaRepository.Adicionar(novaMatricula);
         }
 
-        public void Atualizar(Matricula matricula)
-        {
-            Matricula buscaMatricula = _matriculaRepository.ObterPorId(matricula.idMatricula);
-
-            if (buscaMatricula == null)
-                throw new Exception("Matrícula não encontrada ou inexistente.");
-
-            _matriculaRepository.Atualizar(matricula);
-        }
-
-        public void Deletar(int IDmatricula)
-        {
-            Matricula buscaMatricula = _matriculaRepository.ObterPorId(IDmatricula);
-
-            if (buscaMatricula == null)
-                throw new Exception("Matrícula não encontrada ou inexistente.");
-
-            _matriculaRepository.Deletar(IDmatricula);
-        }
-
-        public bool VerificarSeAtivo(int IDmatricula)
-        {
-            if (_matriculaRepository.ObterPorId(IDmatricula) == null)
-                throw new Exception("Matrícula não encontrada ou inexistente.");
-
-            return _matriculaRepository.VerificarSeAtivo(IDmatricula);
-        }
-
         public List<Matricula> ObterTodos()
         {
+            var matriculas = _matriculaRepository.ObterTodos();
+
+            if (matriculas == null || !matriculas.Any())
+                throw new Exception("Nenhuma matrícula encontrada.");
+
             return _matriculaRepository.ObterTodos();
-        }
-
-       public Matricula ObterPorId(int IDmatricula)
-        {
-            var matricula = _matriculaRepository.ObterPorId(IDmatricula);
-
-            if (matricula == null)
-                throw new Exception("Matrícula não encontrada ou inexistente.");
-
-            if (!matricula.Ativo)
-                throw new Exception("Matrícula inativa.");
-
-            return matricula;
         }
 
         public List<Matricula> ObterPorAluno(int IDAluno)

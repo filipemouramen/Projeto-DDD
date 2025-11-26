@@ -17,7 +17,6 @@ namespace Projeto.Domain.Entidades
         }
         public int idAluno { get; private set; }
         public int idCurso { get; private set; }
-        public int idMatricula { get; private set; }
         public DateTime DataMatricula { get; private set; }
         public bool Ativo { get; private set; }
     }
