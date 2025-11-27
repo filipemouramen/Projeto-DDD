@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using Projeto.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projeto.Application.Service;
 using Projeto.Domain.Interfaces;
@@ -16,7 +18,7 @@ namespace Projeto.API.Controllers
             _matriculaService = matriculaService;
         }
 
-        [HttpPost]
+        [HttpPost("{idAluno}/{idCurso}")]
         public IActionResult Adicionar(int idAluno, int idCurso)
         {
             try
@@ -44,12 +46,12 @@ namespace Projeto.API.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult ObterPorAluno(int IDAluno)
+        [HttpGet("aluno/{idAluno}")]
+        public IActionResult ObterPorAluno(int idAluno)
         {
             try
             {
-                var alunosObtidos = _matriculaService.ObterPorAluno(IDAluno);
+                var alunosObtidos = _matriculaService.ObterPorAluno(idAluno);
                 return Ok(alunosObtidos);
             }
             catch (Exception ex)
@@ -58,12 +60,12 @@ namespace Projeto.API.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult ObterPorCurso(int IDCurso)
+        [HttpGet("curso/{idCurso}")]
+        public IActionResult ObterPorCurso(int idCurso)
         {
             try
             {
-                var cursosObtidos = _matriculaService.ObterPorCurso(IDCurso);
+                var cursosObtidos = _matriculaService.ObterPorCurso(idCurso);
                 return Ok(cursosObtidos);
             }
             catch (Exception ex)

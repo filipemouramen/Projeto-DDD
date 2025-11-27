@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using Projeto.API.DTO.Request;
+using Projeto.Domain.Entidades;
+using Projeto.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projeto.API.DTO.Request;
 using Projeto.Domain.Entidades;
@@ -52,12 +56,12 @@ namespace Projeto.API.Controllers
             }
         }
 
-        [HttpDelete]
-        public IActionResult Deletar(int IDcurso)
+        [HttpDelete("{idCurso}")]
+        public IActionResult Deletar(int idCurso)
         {
             try
             {
-                _cursoService.Deletar(IDcurso);
+                _cursoService.Deletar(idCurso);
                 return Ok("Curso deletado com sucesso!");
             }
             catch (Exception ex)
@@ -66,12 +70,12 @@ namespace Projeto.API.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult VericarSeAtivo(int idcurso)
+        [HttpGet("ativo/{idCurso}")]
+        public IActionResult VericarSeAtivo(int idCurso)
         {
             try
             {
-                bool ativo = _cursoService.VerificarSeAtivo(idcurso);
+                bool ativo = _cursoService.VerificarSeAtivo(idCurso);
                 return Ok(ativo);
             }
             catch (Exception ex)
@@ -94,12 +98,12 @@ namespace Projeto.API.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult ObterPorId(int IDCurso)
+        [HttpGet("{idCurso}")]
+        public IActionResult ObterPorId(int idCurso)
         {
             try
             {
-                var curso = _cursoService.ObterPorId(IDCurso);
+                var curso = _cursoService.ObterPorId(idCurso);
                 if (curso == null)
                 {
                     return NotFound("Curso não encontrado.");

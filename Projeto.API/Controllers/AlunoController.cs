@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using Projeto.API.DTO.Request;
+using Projeto.Domain.Entidades;
+using Projeto.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projeto.API.DTO.Request;
 using Projeto.Domain.Entidades;
@@ -27,7 +31,7 @@ namespace Projeto.API.Controllers
             return Ok(listaAlunos);
         }
 
-        [HttpGet]
+        [HttpGet("{idAluno}")]
         public IActionResult ObterPorId(int idAluno)
         {
             var aluno = _alunoService.ObterPorId(idAluno);
@@ -37,7 +41,7 @@ namespace Projeto.API.Controllers
             return Ok(aluno);
         }
 
-        [HttpGet]
+        [HttpGet("cpf/{cpf}")]
         public IActionResult ObterPorCpf(string cpf)
         {
             var aluno = _alunoService.ObterPorCpf(cpf);
@@ -47,7 +51,7 @@ namespace Projeto.API.Controllers
             return Ok(aluno);
         }
 
-        [HttpGet]
+        [HttpGet("matricula/{matricula}")]
         public IActionResult ObterPorMatricula(string matricula)
         {
             var aluno = _alunoService.ObterPorMatricula(matricula);
@@ -57,7 +61,7 @@ namespace Projeto.API.Controllers
             return Ok(aluno);
         }
 
-        [HttpDelete]
+        [HttpDelete("{idAluno}")]
         public IActionResult Deletar(int idAluno)
         {
             var aluno = _alunoService.ObterPorId(idAluno);
@@ -71,7 +75,6 @@ namespace Projeto.API.Controllers
 
         [HttpPost]
         public IActionResult Adicionar(NovoAlunoRequest novoAlunoRequest)
-
         {
             _alunoService.Adicionar(
                 AlunoFactory.NovoAluno(
@@ -82,12 +85,10 @@ namespace Projeto.API.Controllers
                     ));
 
             return Ok("Aluno adicionado com sucesso!");
-
         }
 
         [HttpPut]
         public IActionResult Atualizar(AtualizarAlunoRequest atualizarAlunoRequest)
-
         {
             _alunoService.Atualizar(
                 AlunoFactory.AlunoExistente(
@@ -98,9 +99,7 @@ namespace Projeto.API.Controllers
                     atualizarAlunoRequest.email
                     ));
 
-            return Ok("Aluno adicionado com sucesso!");
-
+            return Ok("Aluno atualizado com sucesso!");
         }
-
     }
 }
