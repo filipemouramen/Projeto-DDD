@@ -11,15 +11,15 @@ namespace Projeto.Data.Repository
 
         public void Adicionar(Aluno aluno)
         {
-            var sql = "INSERT INTO Aluno (cpf,nome,email,matricula) VALUES (@cpf, @nome, @email, @matricula)";
+            var sql = "INSERT INTO desenvolvimento.Aluno (cpf,nome,email,matricula) VALUES (@cpf, @nome, @email, @matricula)";
 
-            using var conn = new SqlConnection(_connectionString); 
+            using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
 
-            cmd.Parameters.AddWithValue("@cpf", aluno.CPF); 
-            cmd.Parameters.AddWithValue("@nome", aluno.Nome); 
-            cmd.Parameters.AddWithValue("@email", aluno.Email); 
-            cmd.Parameters.AddWithValue("@matricula", aluno.Matricula); 
+            cmd.Parameters.AddWithValue("@cpf", aluno.CPF);
+            cmd.Parameters.AddWithValue("@nome", aluno.Nome);
+            cmd.Parameters.AddWithValue("@email", aluno.Email);
+            cmd.Parameters.AddWithValue("@matricula", aluno.Matricula);
 
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -27,16 +27,16 @@ namespace Projeto.Data.Repository
 
         public void Atualizar(Aluno aluno)
         {
-            var sql = "UPDATE Aluno SET nome = @nome, cpf = @cpf, matricula = @matricula, email = @email WHERE idAluno = @idAluno";
+            var sql = "UPDATE desenvolvimento.Aluno SET nome = @nome, cpf = @cpf, matricula = @matricula, email = @email WHERE idAluno = @idAluno";
 
-            using var conn = new SqlConnection(_connectionString); 
+            using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
 
             cmd.Parameters.AddWithValue("@idAluno", aluno.AlunoID);
-            cmd.Parameters.AddWithValue("@nome", aluno.Nome); 
-            cmd.Parameters.AddWithValue("@cpf", aluno.CPF); 
-            cmd.Parameters.AddWithValue("@matricula", aluno.Matricula); 
-            cmd.Parameters.AddWithValue("@email", aluno.Email); 
+            cmd.Parameters.AddWithValue("@nome", aluno.Nome);
+            cmd.Parameters.AddWithValue("@cpf", aluno.CPF);
+            cmd.Parameters.AddWithValue("@matricula", aluno.Matricula);
+            cmd.Parameters.AddWithValue("@email", aluno.Email);
 
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -44,9 +44,9 @@ namespace Projeto.Data.Repository
 
         public void Deletar(int idAluno)
         {
-            var sql = "DELETE FROM Aluno WHERE idAluno = @idAluno";
+            var sql = "DELETE FROM desenvolvimento.Aluno WHERE idAluno = @idAluno";
 
-            using var conn = new SqlConnection(_connectionString); 
+            using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
 
             cmd.Parameters.AddWithValue("@idAluno", idAluno);
@@ -57,8 +57,8 @@ namespace Projeto.Data.Repository
 
         public Aluno ObterPorCpf(string cpf)
         {
-          var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno WHERE cpf = @cpf"; 
-            using var conn = new SqlConnection(_connectionString); 
+            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM desenvolvimento.Aluno WHERE cpf = @cpf";
+            using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@cpf", cpf);
             conn.Open();
@@ -67,20 +67,20 @@ namespace Projeto.Data.Repository
             {
                 return new Aluno(
                     reader.GetInt32(0),
-                    reader.GetString(1), 
-                    reader.GetString(2), 
+                    reader.GetString(1),
+                    reader.GetString(2),
                     reader.GetString(3),
-                    reader.GetString(4)   
+                    reader.GetString(4)
                 );
             }
             throw new InvalidOperationException("Aluno não encontrado.");
         }
 
-        public Aluno ObterPorId(int idAluno) 
+        public Aluno ObterPorId(int idAluno)
         {
-            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno WHERE idAluno = @idAluno"; 
+            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM desenvolvimento.Aluno WHERE idAluno = @idAluno";
 
-            using var conn = new SqlConnection(_connectionString); 
+            using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
 
             cmd.Parameters.AddWithValue("@idAluno", idAluno);
@@ -90,15 +90,14 @@ namespace Projeto.Data.Repository
             if (reader.Read())
             {
                 return new Aluno(
-
                     reader.GetInt32(0),
-                    reader.GetString(1), 
-                    reader.GetString(2), 
+                    reader.GetString(1),
+                    reader.GetString(2),
                     reader.GetString(3),
-                    reader.GetString(4)   
+                    reader.GetString(4)
                 );
             }
-            throw new InvalidOperationException("Aluno não encontrado."); 
+            throw new InvalidOperationException("Aluno não encontrado.");
         }
 
         public Aluno ObterPorMatricula(string matricula)
@@ -109,9 +108,9 @@ namespace Projeto.Data.Repository
         public List<Aluno> ObterTodos()
         {
             var lista = new List<Aluno>();
-            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno";
+            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM desenvolvimento.Aluno";
 
-            using var conn = new SqlConnection(_connectionString); 
+            using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
 
             conn.Open();
@@ -119,8 +118,8 @@ namespace Projeto.Data.Repository
             while (reader.Read())
             {
                 var aluno = new Aluno(
-                    reader.GetInt32(0), 
-                    reader.GetString(1), 
+                    reader.GetInt32(0),
+                    reader.GetString(1),
                     reader.GetString(2),
                     reader.GetString(3),
                     reader.GetString(4)

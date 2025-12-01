@@ -15,7 +15,7 @@ namespace Projeto.Data.Repository
         private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string não pode ser nula.");
         public void Adicionar(Curso curso)
         {
-            var sql = "INSERT INTO Curso (nome, nomeCoordenador, cargaHoraria, ativo) VALUES (@nome, @nomeCoordenador, @cargaHoraria, @ativo)";
+            var sql = "INSERT INTO desenvolvimento.Curso (nome, nomeCoordenador, cargaHoraria, ativo) VALUES (@nome, @nomeCoordenador, @cargaHoraria, @ativo)";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
@@ -31,14 +31,16 @@ namespace Projeto.Data.Repository
 
         public void Atualizar(Curso curso)
         {
-            var sql = "INSERT INTO Curso (nome, nomeCoordenador, cargaHoraria, ativo) VALUES (@nome, @nomeCoordenador, @cargaHoraria, @ativo)";
+            var sql = "UPDATE desenvolvimento.Curso SET nome = @nome, nomeCoordenador = @nomeCoordenador, cargaHoraria = @cargaHoraria, ativo = @ativo WHERE idCurso = @idCurso";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
 
+            cmd.Parameters.AddWithValue("@idCurso", curso.idCurso);
             cmd.Parameters.AddWithValue("@nome", curso.Nome);
             cmd.Parameters.AddWithValue("@nomeCoordenador", curso.NomeCoordenador);
             cmd.Parameters.AddWithValue("@cargaHoraria", curso.CargaHoraria);
+            cmd.Parameters.AddWithValue("@ativo", curso.Ativo);
 
             conn.Open();
             cmd.ExecuteNonQuery();
@@ -46,7 +48,7 @@ namespace Projeto.Data.Repository
 
         public void Deletar(int IDcurso)
         {
-            var sql = "DELETE FROM Curso WHERE idCurso = @idCurso";
+            var sql = "DELETE FROM desenvolvimento.Curso WHERE idCurso = @idCurso";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
@@ -59,7 +61,7 @@ namespace Projeto.Data.Repository
 
         public Curso ObterPorId(int IDcurso)
         {
-            var sql = "SELECT idCurso, nome, nomeCoordenador, cargaHoraria, ativo FROM Curso WHERE idCurso = @idCurso";
+            var sql = "SELECT idCurso, nome, nomeCoordenador, cargaHoraria, ativo FROM desenvolvimento.Curso WHERE idCurso = @idCurso";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
@@ -86,7 +88,7 @@ namespace Projeto.Data.Repository
         public List<Curso> ObterTodos()
         {
             var listaCursos = new List<Curso>();
-            var sql = "SELECT idCurso, nome, nomeCoordenador, cargaHoraria, ativo FROM Curso";
+            var sql = "SELECT idCurso, nome, nomeCoordenador, cargaHoraria, ativo FROM desenvolvimento.Curso";
 
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand(sql, conn);
